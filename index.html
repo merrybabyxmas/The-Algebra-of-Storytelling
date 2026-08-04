@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Algebra of Storytelling | SPAN-STEM</title>
+    <meta
+      name="description"
+      content="Project page for The Algebra of Storytelling: A State Transition Benchmark for Spanning Multi-Entity Multi-Shot Narratives."
+    >
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="masthead">
+        <a class="seal" href="#top" aria-label="SPAN-STEM home">
+          <span>span</span>
+          <span>stem</span>
+        </a>
+        <p class="venue">ACM Multimedia 2026</p>
+        <h1 id="top">
+          The Algebra of Storytelling: A State Transition Benchmark for Spanning Multi-Entity
+          Multi-Shot Narratives
+        </h1>
+        <p class="tagline">SPAN / STEM</p>
+
+        <section class="authors" aria-label="Authors">
+          <article>
+            <h2>Dongwoo Lee</h2>
+            <p>Department of Computer Science and Engineering</p>
+            <p>Sogang University</p>
+            <p>Seoul, Republic of Korea</p>
+            <a href="mailto:dongwoolee@sogang.ac.kr">dongwoolee@sogang.ac.kr</a>
+          </article>
+          <article>
+            <h2>Yein Lee</h2>
+            <p>Department of Computer Science and Engineering</p>
+            <p>Sogang University</p>
+            <p>Seoul, Republic of Korea</p>
+            <a href="mailto:leeyein@sogang.ac.kr">leeyein@sogang.ac.kr</a>
+          </article>
+          <article>
+            <h2>Jihoon Yang<sup>*</sup></h2>
+            <p>Department of Computer Science and Engineering</p>
+            <p>Sogang University</p>
+            <p>Seoul, Republic of Korea</p>
+            <a href="mailto:yangjh@sogang.ac.kr">yangjh@sogang.ac.kr</a>
+          </article>
+        </section>
+      </header>
+
+      <section class="abstract-first" aria-labelledby="abstract-title">
+        <p class="tiny-heading" id="abstract-title">Abstract</p>
+        <p>
+          Multi-shot video generation models can now produce visually coherent sequences, yet they
+          face a fundamental consistency-dynamics trade-off: the mechanisms that maintain visual
+          consistency across shots - shared attention, in-context conditioning - prevent models from
+          executing the dynamic entity entrances and exits that define storytelling. Current
+          evaluation paradigms are heavily optimized for visual quality and visual consistency,
+          systematically overlooking this trade-off by reducing complex narrative dynamics to simple
+          frame-by-frame image comparisons. We present the Span (State Progression and Algebraic
+          Narrative) framework, which formalizes multi-entity, multi-shot narratives into state
+          transition matrices that algebraically encode character entrances and exits. Crucially, we
+          prove that every conceivable narrative topology can be generated from just two fundamental
+          basis patterns (Relay and Split) by applying intuitive narrative operations - such as time
+          reversal and character role swapping. This elevates video evaluation from heuristic
+          prompting to mathematically complete formal verification. To evaluate generated videos, we
+          introduce Stem (State Transition Error Matching). Instead of relying on scalar
+          similarities, Stem constructs an error matrix that isolates all narrative deviations by
+          comparing the observed transitions against the prescribed script. This matrix is then
+          decomposed in a sparsity-aware manner to decouple detector noise from true narrative
+          signals, yielding two complementary metrics: Prescribed Transition Match (PTM) for
+          microscopic transition fidelity and Entity Presence Accuracy (EPA) for macroscopic cast
+          compliance. On the MEMS-1K (Multi-Entity Multi-Shot) benchmark across four major video
+          generation architectures, PTM clearly discriminates model performances, revealing a vast
+          capability gap and a consistent rank reversal against Identity Consistency - empirically
+          exposing this previously invisible consistency-dynamics trade-off. Furthermore, the
+          algebraic structure of the error matrix naturally induces a comprehensive taxonomy of
+          narrative failures (e.g., characters failing to exit or missing their entrances), providing
+          structured, actionable diagnostics beyond simple scalar scores.
+        </p>
+      </section>
+
+      <nav class="link-row" aria-label="Project links">
+        <a href="https://github.com/merrybabyxmas/The-Algebra-of-Storytelling">Code</a>
+        <a href="https://github.com/merrybabyxmas/The-Algebra-of-Storytelling/blob/main/notebooks/demo.ipynb">Notebook</a>
+        <a href="https://github.com/merrybabyxmas/The-Algebra-of-Storytelling/tree/main/mems1k">MEMS-1K</a>
+      </nav>
+
+      <section class="paper-figure" aria-label="SPAN-STEM framework figure">
+        <img
+          src="assets/span-framework-overview.png"
+          alt="SPAN-STEM framework overview figure showing the STEM evaluation pipeline, algebraic span, and failure taxonomy."
+        >
+      </section>
+
+      <footer class="footer">
+        <div class="rule"><span></span></div>
+        <p>Designed for SPAN-STEM.</p>
+        <a href="https://github.com/merrybabyxmas/The-Algebra-of-Storytelling">View source on GitHub</a>
+      </footer>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

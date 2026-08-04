@@ -1,0 +1,25 @@
+# Default STEM evaluation settings -- the paper configuration.
+#
+# Load with:  --config configs/default_eval.yaml
+# Any explicit command-line flag overrides the value here.
+benchmark: mems1k/mems1k.json
+
+sampling:
+  # 1 = the paper setting: one middle frame per shot.
+  #
+  # STEM measures *established* shot-level presence, not within-shot
+  # tracking, so one frame per shot is the intended granularity. Set this
+  # above 1 to majority-vote over several frames per shot (Appendix Y);
+  # expect roughly a linear increase in detector cost.
+  frames_per_shot: 1
+  fracs: [0.25, 0.5, 0.75]   # used only when frames_per_shot > 1
+  n_shots: 3                 # MEMS-1K videos hold 3 equal-length shots
+
+detector_config: configs/qwen2_vl_7b.yaml
+
+output:
+  keep_answers: true   # store the raw VLM strings alongside each record
+
+statistics:
+  bootstrap_samples: 10000
+  seed: 42

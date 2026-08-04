@@ -1,0 +1,110 @@
+{
+  "name": "GT-Cats",
+  "version": "1.0.0",
+  "description": "Five controlled cases cut from real cat footage: one that executes the Relay narrative correctly and one per failure type. Because the footage is real and the edit is known, these separate a genuine narrative failure from a detector error -- whatever STEM reports here, the video really does show.",
+  "num_scenarios": 5,
+  "num_shots": 3,
+  "source_clips": {
+    "black_cat.mp4": "the black and white cat alone",
+    "AB.mp4": "both cats together",
+    "orange_cat.mp4": "the orange cat alone"
+  },
+  "prescribed_story": "Relay, A -> AB -> B: the black and white cat is alone, the orange cat joins, then the black and white cat leaves.",
+  "scenarios": [
+    {
+      "scenario_id": "GT_Perfect",
+      "pattern": "Relay",
+      "pattern_class": "Basis",
+      "notation": "A→AB→B",
+      "num_shots": 3,
+      "num_entities": 2,
+      "entities": [
+        {"entity_id": "A", "name": "black and white cat", "eval_name": "black and white cat", "entity_type": "A"},
+        {"entity_id": "B", "name": "orange cat", "eval_name": "orange cat", "entity_type": "A"}
+      ],
+      "shot_structure": ["A", "AB", "B"],
+      "presence_matrix": [[1, 0], [1, 1], [0, 1]],
+      "transition_matrix": [[0, 1], [-1, 0]],
+      "shot_sources": ["black_cat.mp4", "AB.mp4", "orange_cat.mp4"],
+      "expected": {"ptm": 1.0, "failure_types": ["None"]},
+      "note": "The edit follows the prescription exactly. STEM should find no failure.",
+      "metadata": {"basis_type": "basis", "num_active_transitions": 2}
+    },
+    {
+      "scenario_id": "Type_I_ContextBleeding",
+      "pattern": "Relay",
+      "pattern_class": "Basis",
+      "notation": "A→AB→B",
+      "num_shots": 3,
+      "num_entities": 2,
+      "entities": [
+        {"entity_id": "A", "name": "black and white cat", "eval_name": "black and white cat", "entity_type": "A"},
+        {"entity_id": "B", "name": "orange cat", "eval_name": "orange cat", "entity_type": "A"}
+      ],
+      "shot_structure": ["A", "AB", "B"],
+      "presence_matrix": [[1, 0], [1, 1], [0, 1]],
+      "transition_matrix": [[0, 1], [-1, 0]],
+      "shot_sources": ["black_cat.mp4", "AB.mp4", "AB.mp4"],
+      "expected": {"ptm": 0.5, "failure_types": ["I"]},
+      "note": "Shot 3 repeats the two-cat clip, so A never leaves: the prescribed exit does not happen.",
+      "metadata": {"basis_type": "basis", "num_active_transitions": 2}
+    },
+    {
+      "scenario_id": "Type_II_Amnesia",
+      "pattern": "Relay",
+      "pattern_class": "Basis",
+      "notation": "A→AB→B",
+      "num_shots": 3,
+      "num_entities": 2,
+      "entities": [
+        {"entity_id": "A", "name": "black and white cat", "eval_name": "black and white cat", "entity_type": "A"},
+        {"entity_id": "B", "name": "orange cat", "eval_name": "orange cat", "entity_type": "A"}
+      ],
+      "shot_structure": ["A", "AB", "B"],
+      "presence_matrix": [[1, 0], [1, 1], [0, 1]],
+      "transition_matrix": [[0, 1], [-1, 0]],
+      "shot_sources": ["black_cat.mp4", "black_cat.mp4", "black_cat.mp4"],
+      "expected": {"ptm": 0.0, "failure_types": ["I", "II"]},
+      "note": "Only the black and white cat is ever shown. B never enters (Type II) and A never leaves (Type I).",
+      "metadata": {"basis_type": "basis", "num_active_transitions": 2}
+    },
+    {
+      "scenario_id": "Type_III_Spurious",
+      "pattern": "Relay",
+      "pattern_class": "Basis",
+      "notation": "A→AB→B",
+      "num_shots": 3,
+      "num_entities": 2,
+      "entities": [
+        {"entity_id": "A", "name": "black and white cat", "eval_name": "black and white cat", "entity_type": "A"},
+        {"entity_id": "B", "name": "orange cat", "eval_name": "orange cat", "entity_type": "A"}
+      ],
+      "shot_structure": ["A", "AB", "B"],
+      "presence_matrix": [[1, 0], [1, 1], [0, 1]],
+      "transition_matrix": [[0, 1], [-1, 0]],
+      "shot_sources": ["orange_cat.mp4", "AB.mp4", "orange_cat.mp4"],
+      "expected": {"ptm": 0.5, "failure_types": ["II", "III"]},
+      "note": "Shot 1 shows the wrong cat, so A appears out of nowhere in shot 2 (Type III) and B is already there when it was supposed to arrive (Type II).",
+      "metadata": {"basis_type": "basis", "num_active_transitions": 2}
+    },
+    {
+      "scenario_id": "Type_IV_Reversal",
+      "pattern": "Relay",
+      "pattern_class": "Basis",
+      "notation": "A→AB→B",
+      "num_shots": 3,
+      "num_entities": 2,
+      "entities": [
+        {"entity_id": "A", "name": "black and white cat", "eval_name": "black and white cat", "entity_type": "A"},
+        {"entity_id": "B", "name": "orange cat", "eval_name": "orange cat", "entity_type": "A"}
+      ],
+      "shot_structure": ["A", "AB", "B"],
+      "presence_matrix": [[1, 0], [1, 1], [0, 1]],
+      "transition_matrix": [[0, 1], [-1, 0]],
+      "shot_sources": ["AB.mp4", "black_cat.mp4", "orange_cat.mp4"],
+      "expected": {"ptm": 0.5, "failure_types": ["III", "IV"]},
+      "note": "B's prescribed entrance runs backwards -- it is present first and leaves instead (|E| = 2, Type IV) -- and re-enters unprompted in shot 3 (Type III).",
+      "metadata": {"basis_type": "basis", "num_active_transitions": 2}
+    }
+  ]
+}

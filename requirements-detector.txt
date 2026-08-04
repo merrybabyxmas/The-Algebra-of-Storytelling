@@ -1,0 +1,25 @@
+# Detector layer: only needed if you want STEM to run Qwen2-VL-7B on your
+# videos. Skip this file entirely if you bring your own presence predictions
+# and use scripts/evaluate_predictions.py.
+#
+# Install a CUDA build of torch that matches your driver first:
+#   https://pytorch.org/get-started/locally/
+torch>=2.0
+transformers>=4.45
+qwen-vl-utils
+opencv-python-headless>=4.5
+pillow>=9.0
+accelerate>=0.26
+
+# Verified combination (RTX 4090, driver 535, Python 3.10):
+#   torch 2.4.0+cu121, transformers 4.45.2, huggingface_hub 0.36.2,
+#   accelerate 1.14.0, qwen-vl-utils 0.0.14, opencv 4.11, pillow 12.2
+#
+# Note on transformers: pin below 5.0 unless you have checked it. The
+# Qwen2-VL classes still exist in 5.x, but 4.45.x is what the reported
+# numbers were produced with.
+#
+# Note on huggingface_hub: transformers 4.45 requires <1.0. Installing
+# accelerate into an existing environment can silently pull hub >=1.0
+# and break the import; check `huggingface_hub.__version__` if
+# `from transformers import Qwen2VLForConditionalGeneration` fails.

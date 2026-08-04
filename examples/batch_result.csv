@@ -1,0 +1,6 @@
+scenario_id,pattern,ptm,epa,frob_dist,failure_types
+GT_Perfect,Relay,1.000000,1.000000,0.000000,None
+Type_I_ContextBleeding,Relay,0.500000,0.833333,1.000000,I
+Type_II_Amnesia,Relay,0.000000,0.500000,1.414214,I|II
+Type_III_Spurious,Relay,0.500000,0.666667,1.414214,II|III
+Type_IV_Reversal,Relay,0.500000,0.666667,2.236068,III|IV

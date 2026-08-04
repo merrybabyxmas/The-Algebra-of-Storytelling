@@ -1,0 +1,153 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/merrybabyxmas/The-Algebra-of-Storytelling/blob/main/mems1k/schema.json",
+  "title": "MEMS-1K benchmark file",
+  "description": "Multi-Entity Multi-Shot 1K. 1,000 three-shot narrative scenarios over 7 patterns. Each scenario prescribes exactly which entities must be on screen in each shot (S*) and therefore which entrances/exits must occur between shots (delta S*).",
+  "type": "object",
+  "required": ["name", "version", "num_scenarios", "num_shots", "patterns", "scenarios"],
+  "properties": {
+    "name": { "const": "MEMS-1K" },
+    "version": { "type": "string", "description": "Benchmark version, e.g. '1.0.0'. Bump on any change to prompts or matrices." },
+    "description": { "type": "string" },
+    "num_scenarios": { "type": "integer", "const": 1000 },
+    "num_shots": { "type": "integer", "const": 3, "description": "T. Every MEMS-1K video is one mp4 holding T equal-length shots in order." },
+    "patterns": {
+      "type": "object",
+      "description": "The 7 canonical narrative patterns. Relay and Split are the algebraic basis (Theorem 3.1); the other five are derived.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["class", "notation", "num_entities", "num_scenarios", "presence_matrix", "transition_matrix"],
+        "properties": {
+          "class": { "enum": ["Basis", "Derived"] },
+          "notation": { "type": "string", "description": "Compact form, e.g. 'A → AB → B'." },
+          "num_entities": { "type": "integer", "minimum": 2, "maximum": 3 },
+          "num_scenarios": { "type": "integer" },
+          "presence_matrix": { "$ref": "#/definitions/presenceMatrix" },
+          "transition_matrix": { "$ref": "#/definitions/transitionMatrix" }
+        }
+      }
+    },
+    "scenarios": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/scenario" }
+    }
+  },
+
+  "definitions": {
+    "presenceMatrix": {
+      "type": "array",
+      "description": "S*, shape T x N, binary. Row t = shot t+1 (top row is the first shot). Column j = entities[j]; column order is ALWAYS the entity_id order A, B, C. S*[t][j] = 1 means entity j must be visible in shot t+1.",
+      "minItems": 2,
+      "items": {
+        "type": "array",
+        "items": { "enum": [0, 1] }
+      }
+    },
+    "transitionMatrix": {
+      "type": "array",
+      "description": "delta S* = S*[1:] - S*[:-1], shape (T-1) x N, values in {-1, 0, +1}. Row t is the transition from shot t+1 to shot t+2. +1 = prescribed entrance, -1 = prescribed exit, 0 = no change prescribed. PTM is scored ONLY on the non-zero cells; the zero cells contribute to EPA and to Type III (spurious) failures but never to PTM.",
+      "minItems": 1,
+      "items": {
+        "type": "array",
+        "items": { "enum": [-1, 0, 1] }
+      }
+    },
+    "entity": {
+      "type": "object",
+      "required": ["entity_id", "name", "eval_name"],
+      "properties": {
+        "entity_id": {
+          "type": "string",
+          "pattern": "^[A-C]$",
+          "description": "Role label. Its position in the sorted id order (A, B, C) is the matrix column index."
+        },
+        "name": {
+          "type": "string",
+          "description": "Noun phrase as it appears in the generation prompts, e.g. 'toddler'."
+        },
+        "eval_name": {
+          "type": "string",
+          "description": "String substituted into the detector query 'Is there a {eval_name} visible in this image? Answer only Yes or No.' Identical to `name` in MEMS-1K v1.0; kept separate so a detector may use different wording without changing the generation prompts."
+        },
+        "entity_type": {
+          "enum": ["H", "P", "A", null],
+          "description": "Coarse category tag from dataset construction: 'H' generic person, 'P' professional/role-defined person, 'A' animal."
+        }
+      }
+    },
+    "shotPrompts": {
+      "type": "object",
+      "description": "One string per shot, keyed shot_1 .. shot_T.",
+      "patternProperties": { "^shot_[0-9]+$": { "type": ["string", "null"] } },
+      "additionalProperties": false
+    },
+    "scenario": {
+      "type": "object",
+      "required": [
+        "scenario_id", "pattern", "num_shots", "num_entities", "entities",
+        "shot_structure", "presence_matrix", "transition_matrix",
+        "gen_prompt", "eval_prompt"
+      ],
+      "properties": {
+        "scenario_id": {
+          "type": "string",
+          "pattern": "^DM1K_[0-9]{3,4}_[A-Za-z_]+_[0-9]{3}$",
+          "description": "Unique id, also the expected video filename stem: <scenario_id>.mp4"
+        },
+        "pattern": {
+          "enum": ["Relay", "Split", "Accumulation", "Convergence", "Sliding_Window", "Reduction", "Reverse_Relay"]
+        },
+        "pattern_class": { "enum": ["Basis", "Derived"] },
+        "notation": { "type": ["string", "null"] },
+        "theme": { "type": ["string", "null"], "description": "Scene/domain tag used to diversify the 1,000 scenarios, e.g. 'Domestic_LivingRoom'." },
+        "num_shots": { "type": "integer", "const": 3 },
+        "num_entities": { "type": "integer", "minimum": 2, "maximum": 3 },
+        "entities": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 3,
+          "items": { "$ref": "#/definitions/entity" }
+        },
+        "shot_structure": {
+          "type": "array",
+          "description": "Human-readable rendering of S*, e.g. ['A', 'AB', 'B']. Derived from presence_matrix; '-' denotes an empty shot.",
+          "items": { "type": "string" }
+        },
+        "presence_matrix": { "$ref": "#/definitions/presenceMatrix" },
+        "transition_matrix": { "$ref": "#/definitions/transitionMatrix" },
+        "gen_prompt": {
+          "allOf": [{ "$ref": "#/definitions/shotPrompts" }],
+          "description": "Prompt fed to the video generator for each shot. Equals eval_prompt + generation_settings.positive_suffix."
+        },
+        "eval_prompt": {
+          "allOf": [{ "$ref": "#/definitions/shotPrompts" }],
+          "description": "Bare shot description without style suffix. NOT the detector query -- the detector asks about entities[j].eval_name, not about this sentence."
+        },
+        "diag_prompt": {
+          "allOf": [{ "$ref": "#/definitions/shotPrompts" }],
+          "description": "Short entity-only phrase used by the CLIP-based baseline metric, e.g. 'a toddler and a mother together'. Not used by STEM."
+        },
+        "generation_settings": {
+          "type": "object",
+          "description": "Shared generation controls. Reported for reproducibility; a system that ignores them is still comparable as long as it is stated.",
+          "properties": {
+            "camera": { "type": ["string", "null"] },
+            "positive_suffix": { "type": ["string", "null"] },
+            "negative_prompt": { "type": ["string", "null"] }
+          }
+        },
+        "metadata": {
+          "type": "object",
+          "properties": {
+            "basis_type": { "enum": ["basis", "derived"] },
+            "num_active_transitions": {
+              "type": "integer",
+              "description": "Count of non-zero cells in transition_matrix = the denominator of PTM for this scenario (2 or 3 in MEMS-1K)."
+            }
+          }
+        }
+      }
+    }
+  }
+}

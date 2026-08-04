@@ -1,0 +1,35 @@
+# Evaluation outputs
+outputs/
+*.shard*.jsonl
+
+# Generated videos are not distributed with this repository.
+# The ground-truth demo footage is.
+*.mp4
+*.avi
+*.mov
+!demo/assets/gt_videos/*.mp4
+
+# Model weights / caches
+*.pt
+*.pth
+*.safetensors
+.cache/
+~/.cache/huggingface
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/

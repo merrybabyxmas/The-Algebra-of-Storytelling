@@ -1,0 +1,75 @@
+{
+  "_comment": "Example input for scripts/evaluate_predictions.py. These are the presence matrices detected for the five ground-truth cat videos, one per failure type. Rows are shots in order; columns follow the scenario's `entities` list (entity_id order A, B).",
+  "predictions": {
+    "GT_Perfect": [
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "Type_I_ContextBleeding": [
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "Type_II_Amnesia": [
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "Type_III_Spurious": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "Type_IV_Reversal": [
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        1
+      ]
+    ]
+  }
+}

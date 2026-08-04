@@ -1,0 +1,126 @@
+{
+  "_comment": "Presence matrices Qwen2-VL-7B produced for the five ground-truth cat videos in demo/assets/gt_videos/. Lets the notebook run the full STEM pipeline with no GPU. Reproduced exactly from the paper's own GT validation run.",
+  "detector": "Qwen/Qwen2-VL-7B-Instruct (middle frame per shot, greedy, max_side=720)",
+  "cases": {
+    "GT_Perfect": {
+      "S_obs": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "answers": {
+        "s0_e0": "Yes.",
+        "s0_e1": "No.",
+        "s1_e0": "Yes.",
+        "s1_e1": "Yes.",
+        "s2_e0": "No.",
+        "s2_e1": "Yes."
+      }
+    },
+    "Type_I_ContextBleeding": {
+      "S_obs": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "answers": {
+        "s0_e0": "Yes.",
+        "s0_e1": "No.",
+        "s1_e0": "Yes.",
+        "s1_e1": "Yes.",
+        "s2_e0": "Yes.",
+        "s2_e1": "Yes."
+      }
+    },
+    "Type_II_Amnesia": {
+      "S_obs": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "answers": {
+        "s0_e0": "Yes.",
+        "s0_e1": "No.",
+        "s1_e0": "Yes.",
+        "s1_e1": "No.",
+        "s2_e0": "Yes.",
+        "s2_e1": "No."
+      }
+    },
+    "Type_III_Spurious": {
+      "S_obs": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "answers": {
+        "s0_e0": "No.",
+        "s0_e1": "Yes.",
+        "s1_e0": "Yes.",
+        "s1_e1": "Yes.",
+        "s2_e0": "No.",
+        "s2_e1": "Yes."
+      }
+    },
+    "Type_IV_Reversal": {
+      "S_obs": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "answers": {
+        "s0_e0": "Yes.",
+        "s0_e1": "Yes.",
+        "s1_e0": "Yes.",
+        "s1_e1": "No.",
+        "s2_e0": "No.",
+        "s2_e1": "Yes."
+      }
+    }
+  }
+}

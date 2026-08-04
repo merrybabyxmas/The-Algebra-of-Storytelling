@@ -1,0 +1,28 @@
+# Presence detector used for every number in the paper.
+#
+# Changing any field here changes the benchmark. If you report STEM scores
+# with a different detector, say so -- PTM/EPA are comparable only across
+# runs that share a detector configuration.
+detector:
+  model_id: Qwen/Qwen2-VL-7B-Instruct
+  dtype: float16
+  device: cuda:0
+
+  # Greedy decoding. No sampling, no temperature, no threshold: the answer
+  # is read as Yes/No from the first tokens, so the detector is
+  # deterministic given the frame.
+  do_sample: false
+  max_new_tokens: 5
+
+  # The query is asked once per (shot, entity) pair. `{entity}` is filled
+  # with the scenario's entities[j].eval_name.
+  query_template: "Is there a {entity} visible in this image? Answer only Yes or No."
+
+  # A response is counted as present iff it starts with "yes"
+  # (case-insensitive). Everything else, including refusals, counts as absent.
+  positive_prefix: "yes"
+
+  # Frames longer than this on their longest side are downscaled before the
+  # query. A no-op for MEMS-1K (512x320); required for real high-resolution
+  # footage, which otherwise exhausts a 24 GB GPU. Set 0 to disable.
+  max_side: 720

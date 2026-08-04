@@ -1,0 +1,103 @@
+{
+  "scenario_id": "Type_IV_Reversal",
+  "pattern": "Relay",
+  "entities": [
+    "black and white cat",
+    "orange cat"
+  ],
+  "S_obs": [
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      0,
+      1
+    ]
+  ],
+  "S_ideal": [
+    [
+      1,
+      0
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      0,
+      1
+    ]
+  ],
+  "delta_S_obs": [
+    [
+      0,
+      -1
+    ],
+    [
+      -1,
+      1
+    ]
+  ],
+  "delta_S_ideal": [
+    [
+      0,
+      1
+    ],
+    [
+      -1,
+      0
+    ]
+  ],
+  "E_error": [
+    [
+      0,
+      -2
+    ],
+    [
+      0,
+      1
+    ]
+  ],
+  "ptm": 0.5,
+  "epa": 0.6666666666666666,
+  "frob_dist": 2.23606797749979,
+  "matrix_distance": 0.7905694150420948,
+  "failures": [
+    "missed_entry_t1_e1",
+    "spurious_t2_e1"
+  ],
+  "failure_types": [
+    "III",
+    "IV"
+  ],
+  "failure_cells": [
+    {
+      "type": "IV",
+      "type_name": "Reversal",
+      "transition_index": 1,
+      "entity_index": 1,
+      "entity_id": "B",
+      "prescribed": 1,
+      "observed": -1,
+      "error": -2
+    },
+    {
+      "type": "III",
+      "type_name": "Spurious Transition",
+      "transition_index": 2,
+      "entity_index": 1,
+      "entity_id": "B",
+      "prescribed": 0,
+      "observed": 1,
+      "error": 1
+    }
+  ],
+  "match_prescribed": 0.5,
+  "method": "gt",
+  "video": "Type_IV_Reversal.mp4"
+}

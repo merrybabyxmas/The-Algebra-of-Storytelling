@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "span-stem"
+version = "1.0.0"
+description = "MEMS-1K benchmark and STEM evaluation for multi-shot narrative video generation"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+keywords = ["video-generation", "benchmark", "evaluation", "multi-shot", "narrative"]
+classifiers = [
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = ["numpy>=1.21", "scipy>=1.7"]
+
+[project.optional-dependencies]
+detector = [
+    "torch>=2.0",
+    "transformers>=4.45",
+    "qwen-vl-utils",
+    "opencv-python-headless>=4.5",
+    "pillow>=9.0",
+    "accelerate>=0.26",
+]
+demo = ["matplotlib>=3.5", "pillow>=9.0", "opencv-python-headless>=4.5", "jupyter"]
+config = ["pyyaml>=6.0"]
+
+[tool.setuptools]
+packages = ["stem", "span"]
+
+[tool.setuptools.package-data]
+"*" = ["*.json", "*.yaml"]

@@ -1,0 +1,13 @@
+# Metric layer: enough to load MEMS-1K, score presence predictions,
+# run the tests, and reproduce every table in the paper. No GPU.
+numpy>=1.21
+scipy>=1.7
+
+# Optional. Only needed for --config on the evaluation CLIs.
+# pyyaml>=6.0
+
+# Optional. Only needed to run demo/stem_overview_demo.ipynb.
+# matplotlib>=3.5
+# pillow>=9.0
+# opencv-python-headless>=4.5
+# jupyter

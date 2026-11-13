@@ -11,7 +11,7 @@ State Transition Benchmark for Spanning Multi-Entity Multi-Shot Narratives**
   <a href="scripts/evaluate_predictions.py"><img alt="STEM CLI" src="https://img.shields.io/badge/STEM-CLI-1c2635?style=for-the-badge"></a>
 </p>
 
-![STEM ground-truth diagnostic](docs/assets/stem-gt-diagnostic.gif)
+![SPAN-STEM framework overview](docs/assets/span-framework-overview.png)
 
 Multi-shot video generators are getting very good at keeping a character
 *looking* the same. They remain bad at making that character **arrive** and
@@ -45,7 +45,7 @@ runs that entire diagram on real video, with no GPU.
 
 ```bash
 git clone https://github.com/merrybabyxmas/The-Algebra-of-Storytelling.git
-cd SPAN-STEM
+cd The-Algebra-of-Storytelling
 pip install -r requirements.txt          # metrics only: numpy, scipy
 pip install -r requirements-detector.txt # optional: the Qwen2-VL detector (GPU)
 ```
